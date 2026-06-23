@@ -1,0 +1,126 @@
+Exercício 4 – Complexidades Assintóticas de Tempo e Espaço
+===========================================================
+
+Baseado nas implementações dos exercícios 1, 2 e 3. 
+n = número de elementos na estrutura.
+
+============================================================
+PILHA (Exercício 1)
+============================================================
+Implementação: array dinâmico com índice "topo".
+
+push():
+  Tempo:  O(1) amortizado
+          No caso geral, apenas incrementa o índice topo e insere o valor
+          no array. Essas são operações constantes. Quando o array está cheio, é
+          necessário criar um novo array com o dobro do tamanho e copiar
+          todos os n elementos, o que custa O(n). Essa cópia ocorre
+          apenas a cada n inserções, então o custo médio por operação
+          permanece O(1) amortizado.
+  Espaço: O(1)
+
+pop():
+  Tempo:  O(1)
+          Apenas lê o valor em dados[topo] e decrementa topo.
+          Não é necessária nenhuma iteração.
+  Espaço: O(1)
+
+Espaço total da estrutura: O(n)
+
+============================================================
+FILA FIFO (Exercício 2)
+============================================================
+Implementação: array circular dinâmico com ponteiros "frente" e "fim".
+
+enqueue():
+  Tempo:  O(1) amortizado
+          Insere o valor na posição "fim" e avança o ponteiro com módulo.
+          Funciona como o push da pilha, pois o redimensionamento acontece raramente,
+          e o custo amortizado é O(1).
+  Espaço: O(1)
+
+dequeue():
+  Tempo:  O(1)
+          Lê o valor em dados[frente] e avança o ponteiro frente com módulo.
+          Nenhum elemento é movido por conta do array circular.
+  Espaço: O(1)
+
+rear():
+  Tempo:  O(1)
+          Calcula o índice do último elemento usando aritmética modular
+          (fim - 1 + capacidade) % capacidade e retorna diretamente.
+  Espaço: O(1)
+
+front():
+  Tempo:  O(1)
+          Retorna diretamente dados[frente], sem iteração.
+  Espaço: O(1)
+
+Espaço total da estrutura: O(n)
+
+============================================================
+LISTA ENCADEADA (Exercício 3)
+============================================================
+Implementação: nós encadeados (Node com valor + referência next).
+Não tem ponteiro tail (último nó).
+
+push():
+  Tempo:  O(n)
+          Percorre todos os nós do início até o fim para inserir no final.
+          Se houvesse um ponteiro tail, seria O(1), mas na nossa
+          implementação é necessário percorrer todos os n nós.
+  Espaço: O(1)
+
+pop():
+  Tempo:  O(n)
+          Precisa chegar até o penúltimo nó para remover o último,
+          percorrendo n-1 nós sempre.
+  Espaço: O(1)
+
+insert(index, node):
+  Tempo:  O(n)
+          No melhor caso (índice 0), é O(1) porque apenas atualiza head.
+          No pior caso (inserir no fim), percorre até o índice n-1.
+          Complexidade geral: O(n).
+  Espaço: O(1)
+
+remove(index):
+  Tempo:  O(n)
+          No melhor caso (índice 0), é O(1).
+          No pior caso (remover o último), percorre n-1 nós.
+          Complexidade geral: O(n).
+  Espaço: O(1)
+
+elementAt(index):
+  Tempo:  O(n)
+          Percorre a lista nó a nó até chegar no índice desejado.
+          No pior caso (último índice), percorre n-1 nós.
+  Espaço: O(1)
+
+Espaço total da estrutura: O(n)
+  Cada nó ocupa espaço constante (valor inteiro + referência next).
+  Com n nós, o espaço total cresce linearmente.
+
+============================================================
+RESUMO GERAL
+============================================================
+
+Estrutura       | Método      | Tempo        | Espaço
+----------------|-------------|--------------|--------
+Pilha           | push        | O(1) amort.  | O(1)
+Pilha           | pop         | O(1)         | O(1)
+Fila            | enqueue     | O(1) amort.  | O(1)
+Fila            | dequeue     | O(1)         | O(1)
+Fila            | rear        | O(1)         | O(1)
+Fila            | front       | O(1)         | O(1)
+Lista Encadeada | push        | O(n)         | O(1)
+Lista Encadeada | pop         | O(n)         | O(1)
+Lista Encadeada | insert      | O(n)         | O(1)
+Lista Encadeada | remove      | O(n)         | O(1)
+Lista Encadeada | elementAt   | O(n)         | O(1)
+
+Espaço total de todas as estruturas: O(n)
+
+Observação: os cálculos da lista encadeada seriam diferentes se a
+implementação tivesse um ponteiro tail. Com tail, push e pop
+seriam O(1). Os demais continuariam O(n) porque exigem travessia.
